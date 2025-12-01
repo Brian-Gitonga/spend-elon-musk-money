@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useCart } from '../context/CartContext';
 import { createPortal } from 'react-dom';
+import { useState } from 'react';
 
 interface CartProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ interface CartProps {
 
 export const Cart = ({ isOpen, onClose }: CartProps) => {
   const { cart, totalSpent, clearCart, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const formatMoney = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -29,9 +31,16 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
   };
 
   const handleClearCart = () => {
-    if (confirm("Are you sure you want to clear your cart?")) {
-      clearCart();
-    }
+    setShowConfirmModal(true);
+  };
+
+  const confirmClearCart = () => {
+    clearCart();
+    setShowConfirmModal(false);
+  };
+
+  const cancelClearCart = () => {
+    setShowConfirmModal(false);
   };
 
   if (!isOpen) return null;
@@ -261,6 +270,91 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
           </Box>
         )}
       </Box>
+
+      {/* Confirmation Modal */}
+      {showConfirmModal && (
+        <Box
+          position="fixed"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          zIndex={2000}
+          bg="blackAlpha.800"
+          backdropFilter="blur(8px)"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          onClick={cancelClearCart}
+        >
+          <Box
+            bg="#1a1a2e"
+            borderRadius="2xl"
+            border="1px solid"
+            borderColor="whiteAlpha.300"
+            p={8}
+            maxW="400px"
+            mx={4}
+            onClick={(e) => e.stopPropagation()}
+            boxShadow="0 25px 50px -12px rgba(0, 0, 0, 0.8)"
+            transform="scale(1)"
+            transition="all 0.3s ease-in-out"
+          >
+            <Stack gap={6} align="center" textAlign="center">
+              <Box
+                w="80px"
+                h="80px"
+                borderRadius="full"
+                bg="linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.2) 100%)"
+                border="2px solid"
+                borderColor="red.400"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Text fontSize="3xl" color="red.400">⚠</Text>
+              </Box>
+
+              <Stack gap={2} align="center">
+                <Text fontSize="2xl" fontWeight="bold" color="white">
+                  Clear Cart?
+                </Text>
+                <Text fontSize="md" color="gray.400" lineHeight="1.6">
+                  Are you sure you want to remove all items from your cart? This action cannot be undone.
+                </Text>
+              </Stack>
+
+              <HStack gap={3} width="full">
+                <Button
+                  flex={1}
+                  variant="outline"
+                  colorPalette="white"
+                  bg="white"
+                  onClick={cancelClearCart}
+                  size="lg"
+                  borderRadius="xl"
+                  fontWeight="bold"
+                  _hover={{ bg: 'white' }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  flex={1}
+                  colorPalette="red"
+                  onClick={confirmClearCart}
+                  size="lg"
+                  borderRadius="xl"
+                  fontWeight="bold"
+                  _hover={{ transform: 'scale(1.02)' }}
+                  transition="all 0.2s"
+                >
+                  Clear Cart
+                </Button>
+              </HStack>
+            </Stack>
+          </Box>
+        </Box>
+      )}
     </Box>,
     document.body
   );

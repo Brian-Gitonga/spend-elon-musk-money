@@ -2,6 +2,7 @@ import { Box, Text, Button, Stack, Image, Badge, HStack } from '@chakra-ui/react
 import { motion } from 'framer-motion';
 import type { Product } from '../types';
 import { useCart } from '../context/CartContext';
+import { useToast } from './Toast';
 
 const MotionBox = motion.create(Box);
 
@@ -12,6 +13,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, index }: ProductCardProps) => {
   const { addToCart, removeFromCart, decreaseQuantity, remainingMoney, cart } = useCart();
+  const { showToast } = useToast();
 
   // Find the current quantity of this product in the cart
   const cartItem = cart.find(item => item.product.id === product.id);
@@ -28,10 +30,15 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
 
   const handleBuy = () => {
     if (product.price > remainingMoney) {
-      alert(`Not enough money! You need ${formatMoney(product.price - remainingMoney)} more to buy this.`);
+      showToast(
+        `Not enough money! You need ${formatMoney(product.price - remainingMoney)} more to buy this.`,
+        'error',
+        4000
+      );
       return;
     }
     addToCart(product);
+    showToast(`Added ${product.name} to cart!`, 'success');
   };
 
   const handleSell = () => {

@@ -6,12 +6,14 @@ import { Header } from './components/Header';
 import { ProductGrid } from './components/ProductGrid';
 import { Cart } from './components/Cart';
 import { useCart } from './context/CartContext';
+import { useToast } from './components/Toast';
 
 const MotionButton = motion.create(Button);
 
 const AppContent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { cart } = useCart();
+  const { ToastContainer } = useToast();
 
   return (
     <Box
@@ -90,6 +92,7 @@ const AppContent = () => {
       </MotionButton>
 
       <Cart isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <ToastContainer />
     </Box>
   );
 };
