@@ -139,7 +139,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
               }}
               transition="all 0.2s"
             >
-              {canAfford ? "🛒 Buy Now" : "❌ Can't Afford"}
+              {canAfford ? "Buy Now" : "Can't Afford"}
             </Button>
           ) : (
             // Show Buy/Sell buttons with quantity when items in cart
@@ -154,7 +154,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                 _hover={{ transform: "scale(1.02)" }}
                 transition="all 0.2s"
               >
-                🗑️ Sell
+                Sell
               </Button>
 
               <Box
@@ -192,7 +192,7 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
                 }}
                 transition="all 0.2s"
               >
-                🛒 Buy
+                Buy
               </Button>
             </HStack>
           )}

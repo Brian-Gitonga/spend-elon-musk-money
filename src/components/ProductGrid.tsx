@@ -71,7 +71,7 @@ export const ProductGrid = () => {
             >
               {categories.map((category) => (
                 <option key={category} value={category} style={{ background: '#1a1a2e', color: 'white' }}>
-                  {category === 'All' ? '📦 All Categories' : `${getCategoryEmoji(category)} ${category}`}
+                  {category === 'All' ? 'All Categories' : category}
                 </option>
               ))}
             </NativeSelectField>
@@ -104,19 +104,5 @@ export const ProductGrid = () => {
   );
 };
 
-// Helper function for category emojis
-function getCategoryEmoji(category: string): string {
-  const emojiMap: Record<string, string> = {
-    'Food': '🍔',
-    'Electronics': '📱',
-    'Fashion': '👔',
-    'Luxury': '💎',
-    'Vehicles': '🚗',
-    'Real Estate': '🏠',
-    'Sports': '⚽',
-    'Space': '🚀',
-    'Entertainment': '🎬'
-  };
-  return emojiMap[category] || '📦';
-}
+
 

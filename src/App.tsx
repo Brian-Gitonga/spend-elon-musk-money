@@ -1,4 +1,4 @@
-import { Box, Container, Button } from '@chakra-ui/react';
+import { Box, Container, Button, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { CartProvider } from './context/CartContext';
@@ -63,7 +63,7 @@ const AppContent = () => {
           bg: "linear-gradient(135deg, rgba(6, 182, 212, 1) 0%, rgba(14, 165, 233, 1) 100%)"
         }}
       >
-        <span style={{ fontSize: '28px', marginRight: '8px' }}>🛒</span>
+        <Text fontSize="lg" fontWeight="bold" mr={2}>CART</Text>
         {cart.length > 0 && (
           <Box
             position="absolute"

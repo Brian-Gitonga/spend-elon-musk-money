@@ -74,7 +74,7 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
         >
           <Stack gap={2}>
             <Text fontSize="2xl" fontWeight="bold" color="white">
-              🛒 Shopping Cart
+              Shopping Cart
             </Text>
             <HStack gap={2}>
               <Badge colorPalette="cyan" fontSize="sm" px={3} py={1} borderRadius="full">
@@ -90,7 +90,21 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
         <DrawerBody py={4}>
           {cart.length === 0 ? (
             <Stack gap={4} py={20} align="center">
-              <Text fontSize="6xl">🛍️</Text>
+              <Box
+                w="80px"
+                h="80px"
+                borderRadius="full"
+                bg="whiteAlpha.100"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                border="2px dashed"
+                borderColor="whiteAlpha.300"
+              >
+                <Text fontSize="2xl" color="gray.400" fontWeight="bold">
+                  CART
+                </Text>
+              </Box>
               <Text fontSize="xl" fontWeight="bold" color="gray.300">
                 Your cart is empty
               </Text>
@@ -153,7 +167,7 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
                           onClick={() => removeFromCart(item.product.id)}
                           _hover={{ bg: 'red.900' }}
                         >
-                          <Text fontSize="sm">🗑️</Text>
+                          <Text fontSize="sm" fontWeight="bold">×</Text>
                         </IconButton>
                       </HStack>
 
@@ -239,7 +253,7 @@ export const Cart = ({ isOpen, onClose }: CartProps) => {
               _hover={{ transform: 'scale(1.02)' }}
               transition="all 0.2s"
             >
-              🗑️ Clear Cart
+              Clear Cart
             </Button>
           </DrawerFooter>
         )}
