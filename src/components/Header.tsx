@@ -44,16 +44,15 @@ export const Header = () => {
           <Stack gap={4} align="center">
             <Heading
               as="h1"
-              fontSize={{ base: "2xl", md: "4xl" }}
+              fontSize={{ base: "2xl", md: "3xl" }}
               textAlign="center"
               fontWeight="black"
-              letterSpacing="tight"
               bgGradient="to-r"
               gradientFrom="cyan.400"
               gradientTo="blue.500"
               bgClip="text"
             >
-              💰 Spend Elon Musk's Fortune
+              Spend Elon Musk's Fortune
             </Heading>
 
             <HStack
@@ -143,7 +142,7 @@ export const Header = () => {
               gradientTo="blue.500"
               bgClip="text"
             >
-              💰 Elon's Money
+              Elon's Money
             </Text>
 
             <HStack gap={{ base: 2, md: 4 }}>

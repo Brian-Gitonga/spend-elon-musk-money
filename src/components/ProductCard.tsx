@@ -1,4 +1,4 @@
-import { Box, Text, Button, Stack, Image, Badge } from '@chakra-ui/react';
+import { Box, Text, Button, Stack, Image, Badge, HStack } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import type { Product } from '../types';
 import { useCart } from '../context/CartContext';
@@ -11,7 +11,11 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, index }: ProductCardProps) => {
-  const { addToCart, remainingMoney } = useCart();
+  const { addToCart, removeFromCart, decreaseQuantity, remainingMoney, cart } = useCart();
+
+  // Find the current quantity of this product in the cart
+  const cartItem = cart.find(item => item.product.id === product.id);
+  const quantity = cartItem ? cartItem.quantity : 0;
 
   const formatMoney = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -27,8 +31,15 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
       alert(`Not enough money! You need ${formatMoney(product.price - remainingMoney)} more to buy this.`);
       return;
     }
-
     addToCart(product);
+  };
+
+  const handleSell = () => {
+    if (quantity > 1) {
+      decreaseQuantity(product.id);
+    } else if (quantity === 1) {
+      removeFromCart(product.id);
+    }
   };
 
   const canAfford = product.price <= remainingMoney;
@@ -113,21 +124,78 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
             {formatMoney(product.price)}
           </Text>
 
-          <Button
-            colorPalette={canAfford ? "cyan" : "red"}
-            size="lg"
-            width="full"
-            onClick={handleBuy}
-            disabled={!canAfford}
-            fontWeight="bold"
-            borderRadius="xl"
-            _hover={{
-              transform: canAfford ? "scale(1.02)" : "none"
-            }}
-            transition="all 0.2s"
-          >
-            {canAfford ? "🛒 Buy Now" : "❌ Can't Afford"}
-          </Button>
+          {quantity === 0 ? (
+            // Show Buy button when no items in cart
+            <Button
+              colorPalette={canAfford ? "cyan" : "red"}
+              size="lg"
+              width="full"
+              onClick={handleBuy}
+              disabled={!canAfford}
+              fontWeight="bold"
+              borderRadius="xl"
+              _hover={{
+                transform: canAfford ? "scale(1.02)" : "none"
+              }}
+              transition="all 0.2s"
+            >
+              {canAfford ? "🛒 Buy Now" : "❌ Can't Afford"}
+            </Button>
+          ) : (
+            // Show Buy/Sell buttons with quantity when items in cart
+            <HStack gap={2} width="full">
+              <Button
+                colorPalette="red"
+                size="lg"
+                onClick={handleSell}
+                fontWeight="bold"
+                borderRadius="xl"
+                flex={1}
+                _hover={{ transform: "scale(1.02)" }}
+                transition="all 0.2s"
+              >
+                🗑️ Sell
+              </Button>
+
+              <Box
+                bg="whiteAlpha.200"
+                borderRadius="xl"
+                px={4}
+                py={3}
+                minW="60px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                border="2px solid"
+                borderColor="cyan.400"
+              >
+                <Text
+                  fontSize="lg"
+                  fontWeight="black"
+                  color="cyan.400"
+                  fontFamily="mono"
+                >
+                  {quantity}
+                </Text>
+              </Box>
+
+              <Button
+                colorPalette={canAfford ? "cyan" : "gray"}
+                size="lg"
+                onClick={handleBuy}
+                disabled={!canAfford}
+                fontWeight="bold"
+                borderRadius="xl"
+                flex={1}
+                _hover={{
+                  transform: canAfford ? "scale(1.02)" : "none"
+                }}
+                transition="all 0.2s"
+              >
+                🛒 Buy
+              </Button>
+            </HStack>
+          )}
         </Stack>
       </Stack>
     </MotionBox>
