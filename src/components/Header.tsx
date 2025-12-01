@@ -17,15 +17,6 @@ export const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const formatMoney = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
   const formatCompact = (amount: number) => {
     if (amount >= 1e9) return `$${(amount / 1e9).toFixed(2)}B`;
     if (amount >= 1e6) return `$${(amount / 1e6).toFixed(2)}M`;

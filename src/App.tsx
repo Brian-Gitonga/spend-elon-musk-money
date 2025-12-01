@@ -1,4 +1,4 @@
-import { Box, Container, Button, Stack } from '@chakra-ui/react';
+import { Box, Container, Button } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { CartProvider } from './context/CartContext';

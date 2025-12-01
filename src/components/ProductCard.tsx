@@ -95,10 +95,10 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
       {/* Content Section */}
       <Stack gap={3} p={5}>
         <Stack gap={1}>
-          <Text fontSize="lg" fontWeight="bold" color="white" noOfLines={1}>
+          <Text fontSize="lg" fontWeight="bold" color="white" lineClamp={1}>
             {product.name}
           </Text>
-          <Text fontSize="sm" color="gray.400" noOfLines={2} minH="40px">
+          <Text fontSize="sm" color="gray.400" lineClamp={2} minH="40px">
             {product.description}
           </Text>
         </Stack>
